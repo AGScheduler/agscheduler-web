@@ -1,9 +1,14 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
 
-	import * as echarts from 'echarts';
+	import * as echarts from 'echarts/core';
+	import { LegendComponent } from 'echarts/components';
+	import { GraphChart } from 'echarts/charts';
+	import { CanvasRenderer } from 'echarts/renderers';
 
 	import Node from './Cluster.svelte';
+
+	echarts.use([LegendComponent, GraphChart, CanvasRenderer]);
 
 	export let nodes: Node[];
 
