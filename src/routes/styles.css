@@ -1,0 +1,27 @@
+@media screen and (min-width: 914px) {
+	body {
+		width: 99%;
+		margin: 10px auto;
+	}
+}
+
+/* Webkit */
+::-webkit-scrollbar {
+	background: #f7f7f9;
+	width: 8px;
+	height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+	background: #e5e5e5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: #bababa;
+}
+
+/* Firefox */
+* {
+	scrollbar-color: #e5e5e5 #f7f7f9;
+	scrollbar-width: thin;
+}
