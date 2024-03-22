@@ -8,6 +8,7 @@
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	import { host } from '../stores.js';
+	import { fetchWithTimeout } from '../utils.js';
 
 	export let id: string;
 	export let status: string;
@@ -25,7 +26,7 @@
 			endpoint = endpoint + '/resume';
 		}
 
-		fetch($host + endpoint, { method: 'POST' })
+		fetchWithTimeout($host + endpoint, { method: 'POST' })
 			.catch((error) => {
 				toast.error('' + error);
 			})
@@ -38,7 +39,7 @@
 	function deleteJob() {
 		isLoading = true;
 
-		fetch($host + '/scheduler/job/' + id, { method: 'DELETE' })
+		fetchWithTimeout($host + '/scheduler/job/' + id, { method: 'DELETE' })
 			.catch((error) => {
 				toast.error('' + error);
 			})
