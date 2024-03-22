@@ -10,7 +10,7 @@
 
 	import InfoDetails from './InfoDetails.svelte';
 	import { info, host } from '../stores.js';
-	import { navigateToSettingsPage } from '../utils.js';
+	import { fetchWithTimeout, navigateToSettingsPage, onInterval } from '../utils.js';
 
 	function startOrStopScheduler() {
 		let endpoint = '/scheduler';
@@ -20,7 +20,7 @@
 			endpoint = endpoint + '/stop';
 		}
 
-		fetch($host + endpoint, { method: 'POST' })
+		fetchWithTimeout($host + endpoint, { method: 'POST' })
 			.catch((error) => {
 				toast.error('' + error);
 			})
@@ -30,7 +30,11 @@
 	}
 
 	async function fetchInfo() {
-		await fetch($host + '/info')
+		if ($info.version === '') {
+			return;
+		}
+
+		await fetchWithTimeout($host + '/info')
 			.then((resp) => resp.json())
 			.then((data) => {
 				$info = data.data;
@@ -40,14 +44,10 @@
 			});
 	}
 
-	onMount(() => {
-		if ($host !== '') {
-			fetchInfo();
+	onInterval(fetchInfo, 60000);
 
-			setInterval(() => {
-				fetchInfo();
-			}, 60000);
-		}
+	onMount(() => {
+		fetchInfo();
 	});
 </script>
 

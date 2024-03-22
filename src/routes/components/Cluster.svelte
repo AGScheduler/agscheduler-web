@@ -11,7 +11,8 @@
 	import ClusterTable from './ClusterTable.svelte';
 	import ClusterGraph from './ClusterGraph.svelte';
 	import Pagination from './Pagination.svelte';
-	import { host } from '../stores.js';
+	import { info, host } from '../stores.js';
+	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
 	let showTable = true;
@@ -35,9 +36,13 @@
 	let nodes: Node[] = [];
 
 	export function fetchNodes() {
+		if ($info.version === '') {
+			return;
+		}
+
 		isLoading = true;
 
-		fetch($host + '/cluster/nodes')
+		fetchWithTimeout($host + '/cluster/nodes')
 			.then((resp) => resp.json())
 			.then((data) => {
 				nodeMap = data.data !== null ? data.data : {};
@@ -59,9 +64,7 @@
 	}
 
 	onMount(() => {
-		if ($host !== '') {
-			fetchNodes();
-		}
+		fetchNodes();
 	});
 </script>
 

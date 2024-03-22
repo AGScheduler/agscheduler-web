@@ -12,7 +12,8 @@
 	import JobsActions from './JobsActions.svelte';
 	import JobsDetails from './JobsDetails.svelte';
 	import Pagination from './Pagination.svelte';
-	import { host } from '../stores.js';
+	import { info, host } from '../stores.js';
+	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
 
@@ -31,9 +32,13 @@
 	let jobs: Job[] = [];
 
 	export function fetchJobs() {
+		if ($info.version === '') {
+			return;
+		}
+
 		isLoading = true;
 
-		fetch($host + '/scheduler/jobs')
+		fetchWithTimeout($host + '/scheduler/jobs')
 			.then((resp) => resp.json())
 			.then((data) => {
 				jobs = data.data !== null ? data.data : [];
@@ -48,9 +53,7 @@
 	}
 
 	onMount(() => {
-		if ($host !== '') {
-			fetchJobs();
-		}
+		fetchJobs();
 	});
 </script>
 

@@ -8,14 +8,14 @@
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	import { info, host } from '../stores.js';
-	import { navigateToHomePage } from '../utils.js';
+	import { fetchWithTimeout, navigateToHomePage } from '../utils.js';
 
 	let isLoading = false;
 
 	function fetchInfo() {
 		isLoading = true;
 
-		fetch($host + '/info')
+		fetchWithTimeout($host + '/info')
 			.then((resp) => resp.json())
 			.then((data) => {
 				$info = data.data;
