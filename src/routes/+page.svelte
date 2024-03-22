@@ -11,14 +11,14 @@
 	import Cluster from './components/Cluster.svelte';
 	import Info from './components/Info.svelte';
 	import Jobs from './components/Jobs.svelte';
-	import { info, host } from './stores.js';
+	import { info } from './stores.js';
 	import { navigateToSettingsPage } from './utils.js';
 
 	let jobs: any;
 	let cluster: any;
 
 	onMount(() => {
-		if ($host === '') {
+		if ($info.version === '') {
 			navigateToSettingsPage();
 		}
 	});
