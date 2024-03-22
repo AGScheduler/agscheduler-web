@@ -29,8 +29,8 @@
 			});
 	}
 
-	function fetchInfo() {
-		fetch($host + '/info')
+	async function fetchInfo() {
+		await fetch($host + '/info')
 			.then((resp) => resp.json())
 			.then((data) => {
 				$info = data.data;
