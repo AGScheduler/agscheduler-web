@@ -39,7 +39,6 @@
 		isLoading = true;
 
 		fetchWithTimeout($host + '/scheduler/jobs')
-			.then((resp) => resp.json())
 			.then((data) => {
 				jobs = data.data !== null ? data.data : [];
 				page = 1;

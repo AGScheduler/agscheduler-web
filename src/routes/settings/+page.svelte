@@ -16,7 +16,6 @@
 		isLoading = true;
 
 		fetchWithTimeout($host + '/info')
-			.then((resp) => resp.json())
 			.then((data) => {
 				$info = data.data;
 				navigateToHomePage();

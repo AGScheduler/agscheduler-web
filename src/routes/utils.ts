@@ -14,13 +14,25 @@ export async function fetchWithTimeout(endpoint: string, options = {}) {
 
 	const controller = new AbortController();
 	const id = setTimeout(() => controller.abort('Request timeout......'), timeout);
-	const response = await fetch(endpoint, {
+	const responseJsonData = await fetch(endpoint, {
 		...options,
 		signal: controller.signal
-	});
+	})
+		.then((resp) => {
+			if (!resp.ok) {
+				throw new Error(resp.statusText);
+			}
+			return resp.json();
+		})
+		.then((data) => {
+			if (data['error'] !== '') {
+				throw new Error(data['error']);
+			}
+			return data;
+		});
 	clearTimeout(id);
 
-	return response;
+	return responseJsonData;
 }
 
 export function onInterval(callback, milliseconds) {
