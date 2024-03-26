@@ -5,7 +5,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Separator } from '$lib/components/ui/separator';
 	import * as Popover from '$lib/components/ui/popover';
-	import ActivityLog from 'svelte-radix/ActivityLog.svelte';
+	import Text from 'lucide-svelte/icons/text';
 
 	import { info } from '../stores.js';
 
@@ -26,7 +26,7 @@
 			on:click={onFetchInfo}
 		>
 			<span class="sr-only">Details</span>
-			<ActivityLog class="h-4 w-4" />
+			<Text class="h-4 w-4" />
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content class="w-120">

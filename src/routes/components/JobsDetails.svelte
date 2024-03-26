@@ -3,7 +3,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Separator } from '$lib/components/ui/separator';
 	import * as Popover from '$lib/components/ui/popover';
-	import ActivityLog from 'svelte-radix/ActivityLog.svelte';
+	import Text from 'lucide-svelte/icons/text';
 
 	import Job from './Jobs.svelte';
 
@@ -14,7 +14,7 @@
 	<Popover.Trigger asChild let:builder>
 		<Button variant="ghost" builders={[builder]} size="icon" class="relative h-8 w-8 p-0">
 			<span class="sr-only">Details</span>
-			<ActivityLog class="h-4 w-4" />
+			<Text class="h-4 w-4" />
 		</Button>
 	</Popover.Trigger>
 	<Popover.Content class="w-120">

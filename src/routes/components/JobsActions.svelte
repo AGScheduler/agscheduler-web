@@ -5,7 +5,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import * as DropdownMenu from '$lib/components/ui/dropdown-menu';
-	import DotsHorizontal from 'svelte-radix/DotsHorizontal.svelte';
+	import Ellipsis from 'lucide-svelte/icons/ellipsis';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	import { host } from '../stores.js';
@@ -57,7 +57,7 @@
 	<DropdownMenu.Trigger asChild let:builder>
 		<Button variant="ghost" builders={[builder]} size="icon" class="relative h-8 w-8 p-0">
 			<span class="sr-only">Open menu</span>
-			<DotsHorizontal class="h-4 w-4" />
+			<Ellipsis class="h-4 w-4" />
 		</Button>
 	</DropdownMenu.Trigger>
 	<DropdownMenu.Content>
