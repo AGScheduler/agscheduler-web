@@ -5,7 +5,9 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Label } from '$lib/components/ui/label';
+	import { ScrollArea } from '$lib/components/ui/scroll-area/index.js';
 	import { Textarea } from '$lib/components/ui/textarea';
+	import * as Accordion from '$lib/components/ui/accordion';
 	import * as Dialog from '$lib/components/ui/dialog';
 	import * as Select from '$lib/components/ui/select';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
@@ -24,20 +26,24 @@
 	const dispatch = createEventDispatcher();
 
 	let funcs = [];
-	let defaultFunc = {
-		label: '',
-		value: ''
-	};
+
+	let aboutFunc = '';
 	let name = 'myJob';
-	let selectedType = {
+	let defaultType = {
 		label: 'Interval',
 		value: 'interval'
 	};
+	let selectedType = defaultType;
 	let startAt = dayjs(now(getLocalTimeZone()).toDate()).format('YYYY-MM-DD HH:mm:ss');
 	let interval = '60s';
 	let cronExpr = '*/1 * * * *';
 	let timezone = getLocalTimeZone();
 	let shortFuncName = '';
+	let defaultFunc = {
+		label: '',
+		value: ''
+	};
+	let selectedFunc = defaultFunc;
 	let args = '{}';
 	let timeout = '1h';
 	let queues = '["default"]';
@@ -55,6 +61,12 @@
 						label: getShortFuncName(funcs[0].name),
 						value: funcs[0].name
 					};
+					selectedFunc = shortFuncName
+						? {
+								label: shortFuncName,
+								value: job.func_name
+							}
+						: defaultFunc;
 				}
 			})
 			.catch((error) => {
@@ -109,16 +121,14 @@
 			label: '',
 			value: ''
 		};
+		aboutFunc = '';
 		name = job.name ? job.name : 'myJob';
 		selectedType = job.type
 			? {
 					label: job.type.charAt(0).toUpperCase() + job.type.slice(1),
 					value: job.type
 				}
-			: {
-					label: 'Interval',
-					value: 'interval'
-				};
+			: defaultType;
 		startAt = job.start_at
 			? job.start_at
 			: dayjs(now(getLocalTimeZone()).toDate()).format('YYYY-MM-DD HH:mm:ss');
@@ -126,18 +136,26 @@
 		cronExpr = job.cron_expr ? job.cron_expr : '*/1 * * * *';
 		timezone = job.timezone ? job.timezone : getLocalTimeZone();
 		shortFuncName = job.func_name ? getShortFuncName(job.func_name) : '';
+		selectedFunc = shortFuncName
+			? {
+					label: shortFuncName,
+					value: job.func_name
+				}
+			: defaultFunc;
 		args = job.args !== null && job.args !== undefined ? JSON.stringify(job.args, null, 4) : '{}';
 		timeout = job.timeout ? job.timeout : '1h';
 		queues =
 			job.queues !== null && job.queues !== undefined ? JSON.stringify(job.queues) : '["default"]';
 	}
 
-	$: selectedFunc = shortFuncName
-		? {
-				label: shortFuncName,
-				value: job.func_name
+	$: {
+		funcs.forEach((f) => {
+			if (f.name === selectedFunc.value) {
+				aboutFunc = f.info;
+				return;
 			}
-		: defaultFunc;
+		});
+	}
 </script>
 
 <Dialog.Root bind:open={showEditDialog}>
@@ -205,6 +223,24 @@
 					</Select.Content>
 				</Select.Root>
 			</div>
+			{#if aboutFunc !== ''}
+				<div class="grid grid-cols-4 items-center gap-4">
+					<div class="col-span-3 col-start-2">
+						<Accordion.Root>
+							<Accordion.Item value="item-1">
+								<Accordion.Trigger>About this function ⭐</Accordion.Trigger>
+								<Accordion.Content>
+									<ScrollArea class="h-72 rounded-md border">
+										<div class="whitespace-pre-wrap">
+											{aboutFunc}
+										</div>
+									</ScrollArea>
+								</Accordion.Content>
+							</Accordion.Item>
+						</Accordion.Root>
+					</div>
+				</div>
+			{/if}
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Label for="args" class="text-right">Args</Label>
 				<Textarea id="args" bind:value={args} class="col-span-3" placeholder="" />
