@@ -6,18 +6,21 @@
 	import { Button } from '$lib/components/ui/button';
 	import * as AlertDialog from '$lib/components/ui/alert-dialog';
 	import * as Table from '$lib/components/ui/table';
+	import Plus from 'lucide-svelte/icons/plus';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 	import RotateCw from 'lucide-svelte/icons/rotate-cw';
 	import Trash2 from 'lucide-svelte/icons/trash-2';
 	import dayjs from 'dayjs';
 
 	import JobsActions from './JobsActions.svelte';
+	import JobsAddOrUpdate from './JobsAddOrUpdate.svelte';
 	import JobsDetails from './JobsDetails.svelte';
 	import Pagination from './Pagination.svelte';
 	import { info, host } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
+	let showAddOrUpdateDialog = false;
 	let showDeleteADialog = false;
 
 	let perPage = 10;
@@ -58,13 +61,15 @@
 		isLoading = true;
 
 		fetchWithTimeout($host + '/scheduler/jobs', { method: 'DELETE' })
+			.then(() => {
+				showDeleteADialog = false;
+				fetchJobs();
+			})
 			.catch((error) => {
 				toast.error('' + error);
 			})
 			.finally(() => {
 				isLoading = false;
-				showDeleteADialog = false;
-				fetchJobs();
 			});
 	}
 
@@ -74,6 +79,15 @@
 </script>
 
 <div class="flex items-center justify-end space-x-2">
+	<Button
+		variant="ghost"
+		size="icon"
+		class="h-6 w-6 p-0"
+		on:click={() => (showAddOrUpdateDialog = true)}
+		disabled={isLoading}
+	>
+		<Plus class="h-4 w-4" />
+	</Button>
 	<Button
 		variant="ghost"
 		size="icon"
@@ -139,7 +153,7 @@
 					</Table.Cell>
 					<Table.Cell>
 						<JobsDetails {job} />
-						<JobsActions id={job.id} status={job.status} on:fetchJobs={fetchJobs} />
+						<JobsActions {job} on:fetchJobs={fetchJobs} />
 					</Table.Cell>
 				</Table.Row>
 			{/each}
@@ -151,15 +165,17 @@
 	{/if}
 {/if}
 
+<JobsAddOrUpdate bind:showAddOrUpdateDialog title="Add" on:fetchJobs={fetchJobs} />
+
 <AlertDialog.Root bind:open={showDeleteADialog}>
 	<AlertDialog.Content>
 		<AlertDialog.Header>
-			<AlertDialog.Title>Are you sure absolutely sure?</AlertDialog.Title>
+			<AlertDialog.Title>Delete all jobs?</AlertDialog.Title>
 			<AlertDialog.Description>This action cannot be undone.</AlertDialog.Description>
 		</AlertDialog.Header>
 		<AlertDialog.Footer>
 			<AlertDialog.Cancel>Cancel</AlertDialog.Cancel>
-			<Button variant="destructive" on:click={deleteAllJobs}>
+			<Button variant="destructive" on:click={deleteAllJobs} disabled={isLoading}>
 				{#if isLoading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}

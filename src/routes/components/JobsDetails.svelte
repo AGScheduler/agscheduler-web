@@ -54,7 +54,9 @@
 				<div class="grid grid-cols-2 items-center gap-4">
 					<Label for="args">Args:</Label>
 					<Label for="args">
-						<pre>{job.args !== null ? JSON.stringify(job.args, null, 4) : ''}</pre>
+						<div class="whitespace-pre-wrap">
+							{job.args !== null ? JSON.stringify(job.args, null, 4) : '{}'}
+						</div>
 					</Label>
 				</div>
 			</div>
@@ -67,7 +69,7 @@
 			<div class="grid gap-2">
 				<div class="grid grid-cols-2 items-center gap-4">
 					<Label for="queues">Queues:</Label>
-					<Label for="queues">{job.queues !== null ? job.queues : ''}</Label>
+					<Label for="queues">{job.queues !== null ? JSON.stringify(job.queues) : '[]'}</Label>
 				</div>
 			</div>
 		</div>

@@ -38,7 +38,7 @@
 		<Card.Content>
 			<form>
 				<div class="flex items-center space-x-4">
-					<Label for="host">Host:</Label>
+					<Label for="host">Host</Label>
 					<Input id="host" bind:value={$host} placeholder="http://127.0.0.1:36370" />
 					<Button on:click={fetchInfo} disabled={!$host || isLoading}>
 						{#if isLoading}

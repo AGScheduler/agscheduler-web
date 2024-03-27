@@ -46,7 +46,9 @@
 				<div class="grid grid-cols-2 items-center gap-4">
 					<Label for="cluster_main_node">ClusterMainNode:</Label>
 					<Label for="cluster_main_node">
-						<pre>{JSON.stringify($info.cluster_main_node, null, 4)}</pre>
+						<div class="whitespace-pre-wrap">
+							{JSON.stringify($info.cluster_main_node, null, 4)}
+						</div>
 					</Label>
 				</div>
 			</div>
