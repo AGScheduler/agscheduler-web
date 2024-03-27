@@ -28,14 +28,14 @@
 		label: '',
 		value: ''
 	};
-	let name = '';
+	let name = 'myJob';
 	let selectedType = {
-		label: 'Datetime',
-		value: 'datetime'
+		label: 'Interval',
+		value: 'interval'
 	};
 	let startAt = dayjs(now(getLocalTimeZone()).toDate()).format('YYYY-MM-DD HH:mm:ss');
-	let interval = '';
-	let cronExpr = '';
+	let interval = '60s';
+	let cronExpr = '*/1 * * * *';
 	let timezone = getLocalTimeZone();
 	let shortFuncName = '';
 	let args = '{}';
@@ -65,17 +65,20 @@
 	function addJob() {
 		isLoading = true;
 
+		let newJob: Job = {};
 		try {
-			job.name = name;
-			job.type = selectedType.value;
-			job.start_at = job.type === 'datetime' ? startAt : '';
-			job.interval = job.type === 'interval' ? interval : '';
-			job.cron_expr = job.type === 'cron' ? cronExpr : '';
-			job.timezone = timezone;
-			job.func_name = selectedFunc.value;
-			job.args = args ? JSON.parse(args) : {};
-			job.timeout = timeout;
-			job.queues = queues ? JSON.parse(queues) : [];
+			newJob = JSON.parse(JSON.stringify(job));
+
+			newJob.name = name;
+			newJob.type = selectedType.value;
+			newJob.start_at = newJob.type === 'datetime' ? startAt : '';
+			newJob.interval = newJob.type === 'interval' ? interval : '';
+			newJob.cron_expr = newJob.type === 'cron' ? cronExpr : '';
+			newJob.timezone = timezone;
+			newJob.func_name = selectedFunc.value;
+			newJob.args = args ? JSON.parse(args) : {};
+			newJob.timeout = timeout;
+			newJob.queues = queues ? JSON.parse(queues) : [];
 		} catch (error) {
 			isLoading = false;
 			toast.error('' + error);
@@ -83,7 +86,7 @@
 		}
 
 		let method = title === 'Add' ? 'POST' : 'PUT';
-		fetchWithTimeout($host + '/scheduler/job', { method: method, body: JSON.stringify(job) })
+		fetchWithTimeout($host + '/scheduler/job', { method: method, body: JSON.stringify(newJob) })
 			.then(() => {
 				showAddOrUpdateDialog = false;
 				dispatch('fetchJobs');
@@ -106,21 +109,21 @@
 			label: '',
 			value: ''
 		};
-		name = job.name ? job.name : '';
+		name = job.name ? job.name : 'myJob';
 		selectedType = job.type
 			? {
 					label: job.type.charAt(0).toUpperCase() + job.type.slice(1),
 					value: job.type
 				}
 			: {
-					label: 'Datetime',
-					value: 'datetime'
+					label: 'Interval',
+					value: 'interval'
 				};
 		startAt = job.start_at
 			? job.start_at
 			: dayjs(now(getLocalTimeZone()).toDate()).format('YYYY-MM-DD HH:mm:ss');
-		interval = job.interval ? job.interval : '';
-		cronExpr = job.cron_expr ? job.cron_expr : '';
+		interval = job.interval ? job.interval : '60s';
+		cronExpr = job.cron_expr ? job.cron_expr : '*/1 * * * *';
 		timezone = job.timezone ? job.timezone : getLocalTimeZone();
 		shortFuncName = job.func_name ? getShortFuncName(job.func_name) : '';
 		args = job.args !== null && job.args !== undefined ? JSON.stringify(job.args, null, 4) : '{}';
@@ -172,7 +175,7 @@
 					/>
 				{:else if selectedType.value === 'interval'}
 					<Label for="interval" class="text-right">Interval</Label>
-					<Input id="interval" bind:value={interval} class="col-span-3" placeholder="2s" />
+					<Input id="interval" bind:value={interval} class="col-span-3" placeholder="60s" />
 				{:else if selectedType.value === 'cron'}
 					<Label for="cron_expr" class="text-right">CronExpr</Label>
 					<Input
