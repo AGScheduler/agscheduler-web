@@ -13,7 +13,7 @@
 	export let nodes: Node[];
 
 	// https://tailwind.nodejs.cn/docs/text-color
-	const colorMap = {
+	const colorObj = {
 		blue: 'rgb(96 165 250)',
 		green: 'rgb(52 211 153)',
 		red: 'rgb(248 113 113)',
@@ -22,24 +22,24 @@
 		gray: 'rgb(156 163 175)'
 	};
 
-	const categoryMap = {
-		mainNode: { name: 'Main Node', color: colorMap.blue },
-		healthyHANode: { name: 'Healthy HA Node', color: colorMap.green },
-		unhealthyHANode: { name: 'Unhealthy HA Node', color: colorMap.red },
-		healthyWorkerNode: { name: 'Healthy Worker Node', color: colorMap.orange },
-		unhealthyWorkerNode: { name: 'Unhealthy Worker Node', color: colorMap.yellow },
-		unknown: { name: 'Unknown', color: colorMap.gray }
+	const categoryObj = {
+		mainNode: { name: 'Main Node', color: colorObj.blue },
+		healthyHANode: { name: 'Healthy HA Node', color: colorObj.green },
+		unhealthyHANode: { name: 'Unhealthy HA Node', color: colorObj.red },
+		healthyWorkerNode: { name: 'Healthy Worker Node', color: colorObj.orange },
+		unhealthyWorkerNode: { name: 'Unhealthy Worker Node', color: colorObj.yellow },
+		unknown: { name: 'Unknown', color: colorObj.gray }
 	};
 
 	let graph = {
 		data: [],
 		links: [],
-		categories: Object.keys(categoryMap).map(function (k) {
+		categories: Object.keys(categoryObj).map(function (k) {
 			return {
-				name: categoryMap[k].name,
+				name: categoryObj[k].name,
 				itemStyle: {
 					normal: {
-						color: categoryMap[k].color
+						color: categoryObj[k].color
 					}
 				}
 			};
@@ -53,22 +53,22 @@
 		let mainNodeName: string;
 
 		nodes.forEach((n) => {
-			let nData = { name: n.endpoint, category: categoryMap.unknown.name };
+			let nData = { name: n.endpoint, category: categoryObj.unknown.name };
 
 			if (n.endpoint === n.endpoint_main) {
 				mainNodeName = n.endpoint;
-				nData.category = categoryMap.mainNode.name;
+				nData.category = categoryObj.mainNode.name;
 			} else if (n.mode === 'HA') {
 				if (n.health) {
-					nData.category = categoryMap.healthyHANode.name;
+					nData.category = categoryObj.healthyHANode.name;
 				} else {
-					nData.category = categoryMap.unhealthyHANode.name;
+					nData.category = categoryObj.unhealthyHANode.name;
 				}
 			} else {
 				if (n.health) {
-					nData.category = categoryMap.healthyWorkerNode.name;
+					nData.category = categoryObj.healthyWorkerNode.name;
 				} else {
-					nData.category = categoryMap.unhealthyWorkerNode.name;
+					nData.category = categoryObj.unhealthyWorkerNode.name;
 				}
 			}
 

@@ -32,7 +32,7 @@
 		register_time: string;
 	};
 
-	let nodeMap = {};
+	let nodeObj = {};
 	let nodes: Node[] = [];
 
 	export function fetchNodes() {
@@ -44,7 +44,7 @@
 
 		fetchWithTimeout($host + '/cluster/nodes')
 			.then((data) => {
-				nodeMap = data.data !== null ? data.data : {};
+				nodeObj = data.data !== null ? data.data : {};
 				page = 1;
 			})
 			.catch((error) => {
@@ -57,8 +57,8 @@
 
 	$: {
 		nodes = [];
-		for (let k in nodeMap) {
-			nodes.push(nodeMap[k]);
+		for (let k in nodeObj) {
+			nodes.push(nodeObj[k]);
 		}
 	}
 
