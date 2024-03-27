@@ -43,7 +43,6 @@
 		isLoading = true;
 
 		fetchWithTimeout($host + '/cluster/nodes')
-			.then((resp) => resp.json())
 			.then((data) => {
 				nodeMap = data.data !== null ? data.data : {};
 				page = 1;

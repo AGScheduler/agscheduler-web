@@ -6,7 +6,7 @@
 	import { Button } from '$lib/components/ui/button';
 	import { Label } from '$lib/components/ui/label';
 	import { Switch } from '$lib/components/ui/switch';
-	import Gear from 'svelte-radix/Gear.svelte';
+	import Settings from 'lucide-svelte/icons/settings';
 
 	import InfoDetails from './InfoDetails.svelte';
 	import { info, host } from '../stores.js';
@@ -35,7 +35,6 @@
 		}
 
 		await fetchWithTimeout($host + '/info')
-			.then((resp) => resp.json())
 			.then((data) => {
 				$info = data.data;
 			})
@@ -64,7 +63,7 @@
 			on:click={navigateToSettingsPage}
 		>
 			<span class="sr-only">Settings</span>
-			<Gear class="h-4 w-4" />
+			<Settings class="h-4 w-4" />
 		</Button>
 		<Switch id="is-running" bind:checked={$info.is_running} on:click={startOrStopScheduler} />
 		<Label for="is-running">{$info.is_running ? 'Start' : 'Stop'}</Label>

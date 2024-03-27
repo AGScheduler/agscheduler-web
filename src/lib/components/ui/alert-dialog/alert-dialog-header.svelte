@@ -2,12 +2,12 @@
 	import { cn } from "$lib/utils.js.js";
 	import type { HTMLAttributes } from "svelte/elements";
 
-	type $$Props = HTMLAttributes<HTMLSpanElement>;
+	type $$Props = HTMLAttributes<HTMLDivElement>;
 
 	let className: $$Props["class"] = undefined;
 	export { className as class };
 </script>
 
-<span class={cn("ml-auto text-xs tracking-widest opacity-60", className)} {...$$restProps}>
+<div class={cn("flex flex-col space-y-2 text-center sm:text-left", className)} {...$$restProps}>
 	<slot />
-</span>
+</div>
