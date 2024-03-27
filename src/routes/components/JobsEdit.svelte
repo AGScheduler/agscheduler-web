@@ -16,7 +16,7 @@
 	import { host } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
-	export let showAddOrUpdateDialog = false;
+	export let showEditDialog = false;
 	export let title = '';
 	export let job: Job = {};
 
@@ -88,7 +88,7 @@
 		let method = title === 'Add' ? 'POST' : 'PUT';
 		fetchWithTimeout($host + '/scheduler/job', { method: method, body: JSON.stringify(newJob) })
 			.then(() => {
-				showAddOrUpdateDialog = false;
+				showEditDialog = false;
 				dispatch('fetchJobs');
 			})
 			.catch((error) => {
@@ -99,11 +99,11 @@
 			});
 	}
 
-	$: if (showAddOrUpdateDialog) {
+	$: if (showEditDialog) {
 		fetchFuncs();
 	}
 
-	$: if (!showAddOrUpdateDialog) {
+	$: if (!showEditDialog) {
 		funcs = [];
 		defaultFunc = {
 			label: '',
@@ -140,7 +140,7 @@
 		: defaultFunc;
 </script>
 
-<Dialog.Root bind:open={showAddOrUpdateDialog}>
+<Dialog.Root bind:open={showEditDialog}>
 	<Dialog.Content class="sm:max-w-[425px]">
 		<Dialog.Header>
 			<Dialog.Title>{title} Job</Dialog.Title>

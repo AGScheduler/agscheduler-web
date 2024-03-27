@@ -11,14 +11,14 @@
 	import Trash2 from 'lucide-svelte/icons/trash-2';
 
 	import Job from './Jobs.svelte';
-	import JobsAddOrUpdate from './JobsAddOrUpdate.svelte';
+	import JobsEdit from './JobsEdit.svelte';
 	import { host } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	export let job: Job;
 
 	let isLoading = false;
-	let showAddOrUpdateDialog = false;
+	let showEditDialog = false;
 	let showDeleteADialog = false;
 	const dispatch = createEventDispatcher();
 
@@ -79,7 +79,7 @@
 	variant="ghost"
 	size="icon"
 	class="relative h-8 w-8 p-0"
-	on:click={() => (showAddOrUpdateDialog = true)}
+	on:click={() => (showEditDialog = true)}
 >
 	<span class="sr-only">Update</span>
 	<FilePenLine class="h-4 w-4" />
@@ -94,7 +94,7 @@
 	<Trash2 class="h-4 w-4" />
 </Button>
 
-<JobsAddOrUpdate bind:showAddOrUpdateDialog title="Update" {job} on:fetchJobs />
+<JobsEdit bind:showEditDialog title="Update" {job} on:fetchJobs />
 
 <AlertDialog.Root bind:open={showDeleteADialog}>
 	<AlertDialog.Content>

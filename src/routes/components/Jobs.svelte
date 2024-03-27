@@ -13,14 +13,14 @@
 	import dayjs from 'dayjs';
 
 	import JobsActions from './JobsActions.svelte';
-	import JobsAddOrUpdate from './JobsAddOrUpdate.svelte';
+	import JobsEdit from './JobsEdit.svelte';
 	import JobsDetails from './JobsDetails.svelte';
 	import Pagination from './Pagination.svelte';
 	import { info, host } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
-	let showAddOrUpdateDialog = false;
+	let showEditDialog = false;
 	let showDeleteADialog = false;
 
 	let perPage = 10;
@@ -83,7 +83,7 @@
 		variant="ghost"
 		size="icon"
 		class="h-6 w-6 p-0"
-		on:click={() => (showAddOrUpdateDialog = true)}
+		on:click={() => (showEditDialog = true)}
 		disabled={isLoading}
 	>
 		<Plus class="h-4 w-4" />
@@ -165,7 +165,7 @@
 	{/if}
 {/if}
 
-<JobsAddOrUpdate bind:showAddOrUpdateDialog title="Add" on:fetchJobs={fetchJobs} />
+<JobsEdit bind:showEditDialog title="Add" on:fetchJobs={fetchJobs} />
 
 <AlertDialog.Root bind:open={showDeleteADialog}>
 	<AlertDialog.Content>
