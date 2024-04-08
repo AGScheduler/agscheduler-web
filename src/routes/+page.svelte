@@ -37,7 +37,7 @@
 			</Avatar.Root>
 			<div class="pt-2">
 				<Card.Title>AGScheduler Web</Card.Title>
-				<Card.Description>v0.0.1</Card.Description>
+				<Card.Description>v{PKG.version}</Card.Description>
 			</div>
 			<Info />
 		</div>
