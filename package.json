@@ -1,5 +1,5 @@
 {
-	"name": "my-svelte-app",
+	"name": "agscheduler-web",
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
