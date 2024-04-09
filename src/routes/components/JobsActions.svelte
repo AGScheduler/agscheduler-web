@@ -25,14 +25,14 @@
 	function pauseOrResumeJob() {
 		isLoading = true;
 
-		let endpoint = '/scheduler/job/' + job.id;
+		let path = '/scheduler/job/' + job.id;
 		if (job.status === 'running') {
-			endpoint = endpoint + '/pause';
+			path = path + '/pause';
 		} else {
-			endpoint = endpoint + '/resume';
+			path = path + '/resume';
 		}
 
-		fetchWithTimeout($address + endpoint, { method: 'POST' })
+		fetchWithTimeout($address + path, { method: 'POST' })
 			.catch((error) => {
 				toast.error('' + error);
 			})

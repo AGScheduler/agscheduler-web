@@ -17,14 +17,14 @@
 	import { fetchWithTimeout, navigateToSettingsPage, onInterval } from '../utils.js';
 
 	function startOrStopScheduler() {
-		let endpoint = '/scheduler';
+		let path = '/scheduler';
 		if (!$info.is_running) {
-			endpoint = endpoint + '/start';
+			path = path + '/start';
 		} else {
-			endpoint = endpoint + '/stop';
+			path = path + '/stop';
 		}
 
-		fetchWithTimeout($address + endpoint, { method: 'POST' })
+		fetchWithTimeout($address + path, { method: 'POST' })
 			.catch((error) => {
 				toast.error('' + error);
 			})
