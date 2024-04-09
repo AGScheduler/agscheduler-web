@@ -1,4 +1,4 @@
-name: Publish container image
+name: Publish Container Image
 
 on:
   push:
