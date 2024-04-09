@@ -54,11 +54,16 @@ jobs:
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
 
+      - name: Remove 'v' prefix from version tag
+        run: |
+          IMAGE_TAG=${{ steps.meta.outputs.tags }}
+          NEW_IMAGE_TAG=$(echo $IMAGE_TAG | sed -r 's/:v/:/')
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
           context: .
           file: ./docker/Dockerfile
           push: true
-          tags: ${{ steps.meta.outputs.tags }}
+          tags: ${{ env.NEW_IMAGE_TAG }}
           labels: ${{ steps.meta.outputs.labels }}
