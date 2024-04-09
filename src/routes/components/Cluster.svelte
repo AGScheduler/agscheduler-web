@@ -25,11 +25,12 @@
 		endpoint_grpc: string;
 		endpoint_http: string;
 		endpoint_main: string;
-		health: boolean;
-		last_heartbeat_time: string;
-		mode: string;
 		queue: string;
+		mode: string;
+		version: string;
+		health: boolean;
 		register_time: string;
+		last_heartbeat_time: string;
 	};
 
 	let nodeObj = {};
