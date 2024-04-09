@@ -53,11 +53,8 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-
-      - name: Remove 'v' prefix from version tag
-        run: |
-          IMAGE_TAG=${{ steps.meta.outputs.tags[0] }}
-          NEW_IMAGE_TAG=$(echo $IMAGE_TAG | sed -r 's/:v/:/')
+          tags: |
+            type=semver,pattern={{version}}
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -65,5 +62,5 @@ jobs:
           context: .
           file: ./docker/Dockerfile
           push: true
-          tags: [${{ env.NEW_IMAGE_TAG }}, ${{ steps.meta.outputs.tags[1] }}]
+          tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
