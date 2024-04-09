@@ -11,7 +11,7 @@
 	import ClusterTable from './ClusterTable.svelte';
 	import ClusterGraph from './ClusterGraph.svelte';
 	import Pagination from './Pagination.svelte';
-	import { info, host } from '../stores.js';
+	import { address, info } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
@@ -25,11 +25,12 @@
 		endpoint_grpc: string;
 		endpoint_http: string;
 		endpoint_main: string;
-		health: boolean;
-		last_heartbeat_time: string;
-		mode: string;
 		queue: string;
+		mode: string;
+		version: string;
+		health: boolean;
 		register_time: string;
+		last_heartbeat_time: string;
 	};
 
 	let nodeObj = {};
@@ -42,7 +43,7 @@
 
 		isLoading = true;
 
-		fetchWithTimeout($host + '/cluster/nodes')
+		fetchWithTimeout($address + '/cluster/nodes')
 			.then((data) => {
 				nodeObj = data.data !== null ? data.data : {};
 				page = 1;

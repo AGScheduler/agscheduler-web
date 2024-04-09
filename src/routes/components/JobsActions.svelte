@@ -12,7 +12,7 @@
 
 	import Job from './Jobs.svelte';
 	import JobsEdit from './JobsEdit.svelte';
-	import { host } from '../stores.js';
+	import { address } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	export let job: Job;
@@ -25,14 +25,14 @@
 	function pauseOrResumeJob() {
 		isLoading = true;
 
-		let endpoint = '/scheduler/job/' + job.id;
+		let path = '/scheduler/job/' + job.id;
 		if (job.status === 'running') {
-			endpoint = endpoint + '/pause';
+			path = path + '/pause';
 		} else {
-			endpoint = endpoint + '/resume';
+			path = path + '/resume';
 		}
 
-		fetchWithTimeout($host + endpoint, { method: 'POST' })
+		fetchWithTimeout($address + path, { method: 'POST' })
 			.catch((error) => {
 				toast.error('' + error);
 			})
@@ -45,7 +45,7 @@
 	function deleteJob() {
 		isLoading = true;
 
-		fetchWithTimeout($host + '/scheduler/job/' + job.id, { method: 'DELETE' })
+		fetchWithTimeout($address + '/scheduler/job/' + job.id, { method: 'DELETE' })
 			.then(() => {
 				showDeleteADialog = false;
 				dispatch('fetchJobs');

@@ -7,7 +7,7 @@
 	import * as Card from '$lib/components/ui/card';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
-	import { info, host } from '../stores.js';
+	import { address, info } from '../stores.js';
 	import { fetchWithTimeout, navigateToHomePage } from '../utils.js';
 
 	let isLoading = false;
@@ -15,7 +15,7 @@
 	function fetchInfo() {
 		isLoading = true;
 
-		fetchWithTimeout($host + '/info')
+		fetchWithTimeout($address + '/info')
 			.then((data) => {
 				$info = data.data;
 				navigateToHomePage();
@@ -38,9 +38,9 @@
 		<Card.Content>
 			<form>
 				<div class="flex items-center space-x-4">
-					<Label for="host">Host</Label>
-					<Input id="host" bind:value={$host} placeholder="http://127.0.0.1:36370" />
-					<Button on:click={fetchInfo} disabled={!$host || isLoading}>
+					<Label for="address">Address</Label>
+					<Input id="address" bind:value={$address} placeholder="http://127.0.0.1:36370" />
+					<Button on:click={fetchInfo} disabled={!$address || isLoading}>
 						{#if isLoading}
 							<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 						{/if}

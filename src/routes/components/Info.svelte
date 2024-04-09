@@ -13,18 +13,18 @@
 	import Sun from 'lucide-svelte/icons/sun';
 
 	import InfoDetails from './InfoDetails.svelte';
-	import { info, host } from '../stores.js';
+	import { address, info } from '../stores.js';
 	import { fetchWithTimeout, navigateToSettingsPage, onInterval } from '../utils.js';
 
 	function startOrStopScheduler() {
-		let endpoint = '/scheduler';
+		let path = '/scheduler';
 		if (!$info.is_running) {
-			endpoint = endpoint + '/start';
+			path = path + '/start';
 		} else {
-			endpoint = endpoint + '/stop';
+			path = path + '/stop';
 		}
 
-		fetchWithTimeout($host + endpoint, { method: 'POST' })
+		fetchWithTimeout($address + path, { method: 'POST' })
 			.catch((error) => {
 				toast.error('' + error);
 			})
@@ -38,7 +38,7 @@
 			return;
 		}
 
-		await fetchWithTimeout($host + '/info')
+		await fetchWithTimeout($address + '/info')
 			.then((data) => {
 				$info = data.data;
 			})
@@ -56,7 +56,7 @@
 
 <div class="grid gap-1" style="margin-left: auto;">
 	<div class="flex items-center space-x-1">
-		<Badge variant="secondary">{$host}</Badge>
+		<Badge variant="secondary">{$address}</Badge>
 		<InfoDetails on:fetchInfo={fetchInfo} />
 	</div>
 	<div class="flex items-center justify-end space-x-2">
