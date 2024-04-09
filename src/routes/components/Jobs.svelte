@@ -16,7 +16,7 @@
 	import JobsEdit from './JobsEdit.svelte';
 	import JobsDetails from './JobsDetails.svelte';
 	import Pagination from './Pagination.svelte';
-	import { info, host } from '../stores.js';
+	import { address, info } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
@@ -44,7 +44,7 @@
 
 		isLoading = true;
 
-		fetchWithTimeout($host + '/scheduler/jobs')
+		fetchWithTimeout($address + '/scheduler/jobs')
 			.then((data) => {
 				jobs = data.data !== null ? data.data : [];
 				page = 1;
@@ -60,7 +60,7 @@
 	function deleteAllJobs() {
 		isLoading = true;
 
-		fetchWithTimeout($host + '/scheduler/jobs', { method: 'DELETE' })
+		fetchWithTimeout($address + '/scheduler/jobs', { method: 'DELETE' })
 			.then(() => {
 				showDeleteADialog = false;
 				fetchJobs();

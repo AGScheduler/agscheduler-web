@@ -11,7 +11,7 @@
 	import ClusterTable from './ClusterTable.svelte';
 	import ClusterGraph from './ClusterGraph.svelte';
 	import Pagination from './Pagination.svelte';
-	import { info, host } from '../stores.js';
+	import { address, info } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
@@ -42,7 +42,7 @@
 
 		isLoading = true;
 
-		fetchWithTimeout($host + '/cluster/nodes')
+		fetchWithTimeout($address + '/cluster/nodes')
 			.then((data) => {
 				nodeObj = data.data !== null ? data.data : {};
 				page = 1;

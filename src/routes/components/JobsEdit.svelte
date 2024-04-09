@@ -15,7 +15,7 @@
 	import { now, getLocalTimeZone } from '@internationalized/date';
 
 	import Job from './Jobs.svelte';
-	import { host } from '../stores.js';
+	import { address } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	export let showEditDialog = false;
@@ -53,7 +53,7 @@
 	}
 
 	function fetchFuncs() {
-		fetchWithTimeout($host + '/funcs')
+		fetchWithTimeout($address + '/funcs')
 			.then((data) => {
 				funcs = data.data;
 				if (funcs.length > 0) {
@@ -98,7 +98,7 @@
 		}
 
 		let method = title === 'Add' ? 'POST' : 'PUT';
-		fetchWithTimeout($host + '/scheduler/job', { method: method, body: JSON.stringify(newJob) })
+		fetchWithTimeout($address + '/scheduler/job', { method: method, body: JSON.stringify(newJob) })
 			.then(() => {
 				showEditDialog = false;
 				dispatch('fetchJobs');
