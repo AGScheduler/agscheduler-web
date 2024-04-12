@@ -9,12 +9,12 @@ export function navigateToSettingsPage() {
 	goto('./settings');
 }
 
-export async function fetchWithTimeout(endpoint: string, options = {}) {
+export async function fetchWithTimeout(url: string, options = {}) {
 	const { timeout = 6000 } = options;
 
 	const controller = new AbortController();
 	const id = setTimeout(() => controller.abort('Request timeout......'), timeout);
-	const responseJsonData = await fetch(endpoint, {
+	const responseJsonData = await fetch(url, {
 		...options,
 		signal: controller.signal
 	})
