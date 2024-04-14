@@ -1,9 +1,8 @@
 name: Publish Container Image
 
 on:
-  push:
-    tags:
-      - '*'
+  release:
+    types: [created]
 
 env:
   REGISTRY: ghcr.io
