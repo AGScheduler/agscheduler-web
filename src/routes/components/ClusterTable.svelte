@@ -14,6 +14,7 @@
 	<Table.Header>
 		<Table.Row>
 			<Table.Head>Endpoint</Table.Head>
+			<Table.Head>Leader</Table.Head>
 			<Table.Head>EndpointGRPC</Table.Head>
 			<Table.Head>EndpointHTTP</Table.Head>
 			<Table.Head>EndpointMain</Table.Head>
@@ -29,12 +30,13 @@
 		{#each nodes.slice((page - 1) * perPage, page * perPage) as node, i (i)}
 			<Table.Row>
 				<Table.Cell>
+					{node.endpoint}
+				</Table.Cell>
+				<Table.Cell>
 					{#if node.endpoint === node.endpoint_main}
-						<Badge>
-							{node.endpoint}
-						</Badge>
+						<Badge>true</Badge>
 					{:else}
-						{node.endpoint}
+						false
 					{/if}
 				</Table.Cell>
 				<Table.Cell>{node.endpoint_grpc}</Table.Cell>
