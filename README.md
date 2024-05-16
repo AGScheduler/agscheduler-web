@@ -1,4 +1,4 @@
-# agscheduler-web
+# AGScheduler-Web
 
 [![deploy](https://github.com/agscheduler/agscheduler-web/actions/workflows/deploy.yml/badge.svg)](https://github.com/agscheduler/agscheduler-web/actions/workflows/deploy.yml)
 [![publish-container-image](https://github.com/agscheduler/agscheduler-web/actions/workflows/publish.yml/badge.svg)](https://github.com/agscheduler/agscheduler-web/actions/workflows/publish.yml)
