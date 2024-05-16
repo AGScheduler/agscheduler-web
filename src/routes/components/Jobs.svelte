@@ -117,6 +117,7 @@
 				<Table.Head>ID</Table.Head>
 				<Table.Head>Name</Table.Head>
 				<Table.Head>Type</Table.Head>
+				<Table.Head>TypeValue</Table.Head>
 				<Table.Head>LastRunTime</Table.Head>
 				<Table.Head>NextRunTime</Table.Head>
 				<Table.Head>Status</Table.Head>
@@ -130,6 +131,17 @@
 					<Table.Cell>
 						<Badge variant="secondary">
 							{job.type}
+						</Badge>
+					</Table.Cell>
+					<Table.Cell>
+						<Badge variant="secondary">
+							{#if job.type === 'datetime'}
+								{job.start_at}
+							{:else if job.type === 'interval'}
+								{job.interval}
+							{:else if job.type === 'cron'}
+								{job.cron_expr}
+							{/if}
 						</Badge>
 					</Table.Cell>
 					{#if job.last_run_time === '0001-01-01T00:00:00Z'}
