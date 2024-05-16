@@ -7,6 +7,20 @@
 
 > Web Client for AGScheduler using [Svelte](https://svelte.dev/) + [SvelteKit](https://kit.svelte.dev/) + [shadcn-svelte](https://shadcn-svelte.com/) + [Tailwind CSS](https://tailwindcss.com/).
 
+## Docker
+
+```bash
+docker run --rm -p 8080:80 ghcr.io/agscheduler/agscheduler-web:latest
+```
+
+## View
+
+![jobs](assets/jobs.png)
+
+![cluster_table](assets/cluster_table.png)
+
+![cluster_graph](assets/cluster_graph.png)
+
 ## Developing
 
 ```bash
@@ -21,10 +35,4 @@ pnpm run dev
 pnpm run build
 
 pnpm run preview
-```
-
-## Docker
-
-```bash
-docker run --rm -p 8080:80 ghcr.io/agscheduler/agscheduler-web:latest
 ```
