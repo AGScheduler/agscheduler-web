@@ -38,6 +38,28 @@
 			<Separator />
 			<div class="grid gap-2">
 				<div class="grid grid-cols-2 items-center gap-4">
+					<Label for="has_broker">HasBroker:</Label>
+					<Label for="has_broker">{$info.has_broker}</Label>
+				</div>
+			</div>
+			<div class="grid gap-2">
+				<div class="grid grid-cols-2 items-center gap-4">
+					<Label for="broker">Broker:</Label>
+					<Label for="broker">
+						<div class="whitespace-pre-wrap">
+							{JSON.stringify($info.broker, null, 4)}
+						</div>
+					</Label>
+				</div>
+			</div>
+			<div class="grid gap-2">
+				<div class="grid grid-cols-2 items-center gap-4">
+					<Label for="has_recorder">HasRecorder:</Label>
+					<Label for="has_recorder">{$info.has_recorder}</Label>
+				</div>
+			</div>
+			<div class="grid gap-2">
+				<div class="grid grid-cols-2 items-center gap-4">
 					<Label for="is_cluster_mode">IsClusterMode:</Label>
 					<Label for="is_cluster_mode">{$info.is_cluster_mode}</Label>
 				</div>
