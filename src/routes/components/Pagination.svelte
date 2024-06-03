@@ -3,8 +3,7 @@
 
 	export let count = 0;
 	export let page = 1;
-
-	let perPage = 10;
+	export let perPage = 10;
 </script>
 
 <Pagination.Root class="mt-2" {count} {perPage} bind:page let:pages let:currentPage>
