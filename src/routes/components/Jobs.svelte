@@ -121,6 +121,7 @@
 				<Table.Head>LastRunTime</Table.Head>
 				<Table.Head>NextRunTime</Table.Head>
 				<Table.Head>Status</Table.Head>
+				<Table.Head>Actions</Table.Head>
 			</Table.Row>
 		</Table.Header>
 		<Table.Body>

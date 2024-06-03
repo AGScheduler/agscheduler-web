@@ -11,10 +11,12 @@
 	import Cluster from './components/Cluster.svelte';
 	import Info from './components/Info.svelte';
 	import Jobs from './components/Jobs.svelte';
+	import Records from './components/Records.svelte';
 	import { info } from './stores.js';
 	import { navigateToSettingsPage } from './utils.js';
 
 	let jobs: any;
+	let records: any;
 	let cluster: any;
 
 	onMount(() => {
@@ -47,6 +49,9 @@
 		<Tabs.Root>
 			<Tabs.List>
 				<Tabs.Trigger value="jobs" on:click={jobs.fetchJobs}>Jobs</Tabs.Trigger>
+				{#if $info.has_recorder}
+					<Tabs.Trigger value="records" on:click={records.fetchRecords}>Records</Tabs.Trigger>
+				{/if}
 				{#if $info.is_cluster_mode}
 					<Tabs.Trigger value="cluster" on:click={cluster.fetchNodes}>Cluster</Tabs.Trigger>
 				{/if}
@@ -54,6 +59,11 @@
 			<Tabs.Content value="jobs">
 				<Jobs bind:this={jobs} />
 			</Tabs.Content>
+			{#if $info.has_recorder}
+				<Tabs.Content value="records">
+					<Records bind:this={records} />
+				</Tabs.Content>
+			{/if}
 			{#if $info.is_cluster_mode}
 				<Tabs.Content value="cluster">
 					<Cluster bind:this={cluster} />
