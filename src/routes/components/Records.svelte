@@ -56,8 +56,8 @@
 			urlPath = urlPath + '/' + jobId.trim();
 		}
 		let query = 'page=' + page + '&' + 'page_size=' + perPage;
-		let url = urlPath + '?' + query;
-		fetchWithTimeout($address + url)
+		urlPath = urlPath + '?' + query;
+		fetchWithTimeout($address + urlPath)
 			.then((data) => {
 				records = data.data !== null ? data.data['res'] : [];
 				count = data.data !== null ? data.data['total'] : 0;
