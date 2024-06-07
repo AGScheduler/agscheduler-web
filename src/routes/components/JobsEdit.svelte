@@ -74,7 +74,7 @@
 			});
 	}
 
-	function addJob() {
+	function addOrUpdateJob() {
 		isLoading = true;
 
 		let newJob: Job = {};
@@ -259,7 +259,7 @@
 			</div>
 		</div>
 		<Dialog.Footer>
-			<Button type="submit" on:click={addJob} disabled={isLoading}>
+			<Button type="submit" on:click={addOrUpdateJob} disabled={isLoading}>
 				{#if isLoading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}
