@@ -32,8 +32,8 @@
 <div class="flex h-screen items-center justify-center">
 	<Card.Root class="w-[480px]">
 		<Card.Header>
-			<Card.Title>Settings</Card.Title>
-			<Card.Description>Fill in the configuration information.</Card.Description>
+			<Card.Title>Welcome to AGScheduler Web</Card.Title>
+			<Card.Description>Setting configuration information</Card.Description>
 		</Card.Header>
 		<Card.Content>
 			<form>

@@ -8,13 +8,19 @@
 	import { Label } from '$lib/components/ui/label';
 	import { Separator } from '$lib/components/ui/separator';
 	import { Switch } from '$lib/components/ui/switch';
+	import LockKeyhole from 'lucide-svelte/icons/lock-keyhole';
 	import MoonStar from 'lucide-svelte/icons/moon-star';
 	import Settings from 'lucide-svelte/icons/settings';
 	import Sun from 'lucide-svelte/icons/sun';
 
 	import InfoDetails from './InfoDetails.svelte';
-	import { address, info } from '../stores.js';
-	import { fetchWithTimeout, navigateToSettingsPage, onInterval } from '../utils.js';
+	import { address, authPasswordSHA2, info } from '../stores.js';
+	import {
+		fetchWithTimeout,
+		navigateToAuthPage,
+		navigateToSettingsPage,
+		onInterval
+	} from '../utils.js';
 
 	function startOrStopScheduler() {
 		let path = '/scheduler';
@@ -44,6 +50,18 @@
 			})
 			.catch((error) => {
 				toast.error('' + error);
+			});
+	}
+
+	function lock() {
+		$authPasswordSHA2 = '';
+
+		fetchWithTimeout($address + '/info')
+			.then((data) => {
+				$info = data.data;
+			})
+			.catch(() => {
+				navigateToAuthPage();
 			});
 	}
 
@@ -79,6 +97,12 @@
 			<span class="sr-only">Settings</span>
 			<Settings class="h-4 w-4" />
 		</Button>
+		{#if $authPasswordSHA2 != ''}
+			<Button variant="ghost" size="icon" class="relative h-6 w-6 p-0" on:click={lock}>
+				<span class="sr-only">Lock</span>
+				<LockKeyhole class="h-4 w-4" />
+			</Button>
+		{/if}
 		<Switch id="is-running" bind:checked={$info.is_running} on:click={startOrStopScheduler} />
 		<Label for="is-running">{$info.is_running ? 'Start' : 'Stop'}</Label>
 	</div>
