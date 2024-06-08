@@ -46,7 +46,7 @@
 	let selectedFunc = defaultFunc;
 	let args = '{}';
 	let timeout = '1h';
-	let queues = '["default"]';
+	let queues = '[]';
 
 	function getShortFuncName(funcName) {
 		return funcName.split('.')[funcName.split('.').length - 1];
@@ -74,7 +74,7 @@
 			});
 	}
 
-	function addJob() {
+	function addOrUpdateJob() {
 		isLoading = true;
 
 		let newJob: Job = {};
@@ -144,8 +144,7 @@
 			: defaultFunc;
 		args = job.args !== null && job.args !== undefined ? JSON.stringify(job.args, null, 4) : '{}';
 		timeout = job.timeout ? job.timeout : '1h';
-		queues =
-			job.queues !== null && job.queues !== undefined ? JSON.stringify(job.queues) : '["default"]';
+		queues = job.queues !== null && job.queues !== undefined ? JSON.stringify(job.queues) : '[]';
 	}
 
 	$: {
@@ -260,7 +259,7 @@
 			</div>
 		</div>
 		<Dialog.Footer>
-			<Button type="submit" on:click={addJob} disabled={isLoading}>
+			<Button type="submit" on:click={addOrUpdateJob} disabled={isLoading}>
 				{#if isLoading}
 					<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />
 				{/if}

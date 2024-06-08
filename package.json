@@ -1,6 +1,6 @@
 {
 	"name": "agscheduler-web",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"private": true,
 	"scripts": {
 		"dev": "vite dev",
@@ -43,6 +43,7 @@
 		"@internationalized/date": "^3.5.2",
 		"bits-ui": "^0.19.7",
 		"clsx": "^2.1.0",
+		"crypto-js": "^4.2.0",
 		"dayjs": "^1.11.10",
 		"echarts": "^5.5.0",
 		"lucide-svelte": "^0.358.0",
