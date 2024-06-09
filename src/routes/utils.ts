@@ -15,7 +15,7 @@ export function navigateToAuthPage() {
 }
 
 export async function fetchWithTimeout(url: string, options = {}) {
-	let authPasswordSHA2Value = "";
+	let authPasswordSHA2Value = '';
 	authPasswordSHA2.subscribe((value) => {
 		authPasswordSHA2Value = value;
 	});
@@ -26,7 +26,7 @@ export async function fetchWithTimeout(url: string, options = {}) {
 	const id = setTimeout(() => controller.abort('Request timeout......'), timeout);
 	const responseJsonData = await fetch(url, {
 		headers: {
-			"Auth-Password-SHA2": authPasswordSHA2Value,
+			'Auth-Password-SHA2': authPasswordSHA2Value
 		},
 		...options,
 		signal: controller.signal
@@ -34,7 +34,7 @@ export async function fetchWithTimeout(url: string, options = {}) {
 		.then((resp) => {
 			if (!resp.ok) {
 				if (resp.status == 401) {
-					navigateToAuthPage()
+					navigateToAuthPage();
 				}
 				throw new Error(resp.statusText);
 			}
