@@ -57,7 +57,7 @@
 					</Button>
 				</div>
 			</div>
-			<Card.Description>Please enter the original password for $PasswordSha2</Card.Description>
+			<Card.Description>Please enter the password for AGScheduler</Card.Description>
 		</Card.Header>
 		<Card.Content>
 			<form>
