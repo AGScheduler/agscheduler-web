@@ -15,18 +15,12 @@
 			<Text class="h-4 w-4" />
 		</Button>
 	</Dialog.Trigger>
-	<Dialog.Content class="sm:max-w-[1024px] sm:max-h-[720px]">
+	<Dialog.Content class="sm:max-h-[720px] sm:max-w-[1024px]">
 		<Dialog.Header>
 			<Dialog.Title>Result</Dialog.Title>
 		</Dialog.Header>
-		<div class="grid gap-4">
-			<div class="rounded-md bg-black p-6 overflow-y-auto max-h-[580px]">
-				<pre>
-                    <code class="text-muted-foreground grid gap-1 text-sm">
-                        {record.result}
-                    </code>
-                </pre>
-			</div>
+		<div class="max-h-[580px] overflow-y-auto rounded-md bg-black p-6">
+			<pre><code class="text-sm text-gray-300">{record.result}</code></pre>
 		</div>
 	</Dialog.Content>
 </Dialog.Root>
