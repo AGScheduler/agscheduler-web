@@ -35,6 +35,7 @@ export async function fetchWithTimeout(url: string, options = {}) {
 			if (!resp.ok) {
 				if (resp.status == 401) {
 					navigateToAuthPage();
+					throw new Error('Unauthorized');
 				}
 				throw new Error(resp.statusText);
 			}
