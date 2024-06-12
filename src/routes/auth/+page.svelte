@@ -80,6 +80,7 @@
 						bind:value={authPassword}
 						placeholder="Password"
 						type="password"
+						autofocus
 					/>
 					<Button on:click={verifyAuth} disabled={!authPassword || isLoading}>
 						{#if isLoading}

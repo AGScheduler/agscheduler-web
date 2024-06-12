@@ -46,7 +46,12 @@
 			<form>
 				<div class="flex items-center space-x-4">
 					<Label for="address">Address</Label>
-					<Input id="address" bind:value={$address} placeholder="http://127.0.0.1:36370" />
+					<Input
+						id="address"
+						bind:value={$address}
+						placeholder="http://127.0.0.1:36370"
+						autofocus
+					/>
 					<Button on:click={fetchInfo} disabled={!$address || isLoading}>
 						{#if isLoading}
 							<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />

@@ -166,7 +166,7 @@
 		<div class="grid gap-4 py-4">
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Label for="name" class="text-right">Name</Label>
-				<Input id="name" bind:value={name} class="col-span-3" placeholder="myJob" />
+				<Input id="name" bind:value={name} class="col-span-3" placeholder="myJob" autofocus />
 			</div>
 			<div class="grid grid-cols-4 items-center gap-4">
 				<Label for="type" class="text-right">Type</Label>
