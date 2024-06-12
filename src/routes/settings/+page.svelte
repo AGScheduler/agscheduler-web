@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
 	import { Button } from '$lib/components/ui/button';
@@ -8,7 +9,7 @@
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	import { address, info } from '../stores.js';
-	import { fetchWithTimeout, navigateToHomePage } from '../utils.js';
+	import { fetchWithTimeout, getAuthCache, navigateToHomePage } from '../utils.js';
 
 	let isLoading = false;
 
@@ -27,6 +28,10 @@
 				isLoading = false;
 			});
 	}
+
+	onMount(() => {
+		getAuthCache();
+	});
 </script>
 
 <div class="flex h-screen items-center justify-center">

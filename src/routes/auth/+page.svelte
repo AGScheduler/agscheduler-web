@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
 	import sha256 from 'crypto-js/sha256';
@@ -9,7 +10,12 @@
 	import Settings from 'lucide-svelte/icons/settings';
 
 	import { address, authPasswordSHA2, info } from '../stores.js';
-	import { fetchWithTimeout, navigateToHomePage, navigateToSettingsPage } from '../utils.js';
+	import {
+		fetchWithTimeout,
+		getAuthCache,
+		navigateToHomePage,
+		navigateToSettingsPage
+	} from '../utils.js';
 
 	let isLoading = false;
 	let authPassword = '';
@@ -26,6 +32,7 @@
 		fetchWithTimeout($address + '/info')
 			.then((data) => {
 				$info = data.data;
+				localStorage.setItem('cache:auth', $authPasswordSHA2);
 				authPassword = '';
 				navigateToHomePage();
 			})
@@ -36,6 +43,10 @@
 				isLoading = false;
 			});
 	}
+
+	onMount(() => {
+		getAuthCache();
+	});
 </script>
 
 <div class="flex h-screen items-center justify-center">

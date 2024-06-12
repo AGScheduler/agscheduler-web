@@ -54,6 +54,7 @@
 	}
 
 	function lock() {
+		localStorage.removeItem('cache:auth');
 		$authPasswordSHA2 = '';
 
 		fetchWithTimeout($address + '/info')

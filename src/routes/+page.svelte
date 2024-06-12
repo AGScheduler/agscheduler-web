@@ -13,13 +13,15 @@
 	import Jobs from './components/Jobs.svelte';
 	import Records from './components/Records.svelte';
 	import { info } from './stores.js';
-	import { navigateToSettingsPage } from './utils.js';
+	import { getAuthCache, navigateToSettingsPage } from './utils.js';
 
 	let jobs: any;
 	let records: any;
 	let cluster: any;
 
 	onMount(() => {
+		getAuthCache();
+
 		if ($info.version === '') {
 			navigateToSettingsPage();
 		}

@@ -59,3 +59,10 @@ export function onInterval(callback, milliseconds) {
 		clearInterval(interval);
 	});
 }
+
+export function getAuthCache() {
+	const authCache = localStorage.getItem('cache:auth');
+	if (authCache) {
+		authPasswordSHA2.set(authCache);
+	}
+}
