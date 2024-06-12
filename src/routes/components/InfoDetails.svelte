@@ -66,16 +66,6 @@
 			</div>
 			<div class="grid gap-2">
 				<div class="grid grid-cols-2 items-center gap-4">
-					<Label for="cluster_main_node">ClusterMainNode:</Label>
-					<Label for="cluster_main_node">
-						<div class="whitespace-pre-wrap">
-							{JSON.stringify($info.cluster_main_node, null, 4)}
-						</div>
-					</Label>
-				</div>
-			</div>
-			<div class="grid gap-2">
-				<div class="grid grid-cols-2 items-center gap-4">
 					<Label for="version">Version:</Label>
 					<Label for="version">{$info.version}</Label>
 				</div>

@@ -8,7 +8,6 @@ export const info = writable({
 	broker: {},
 	has_recorder: false,
 	is_cluster_mode: false,
-	cluster_main_node: {},
 	is_running: false,
 	version: ''
 });
