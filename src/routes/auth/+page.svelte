@@ -12,6 +12,7 @@
 	import { address, authPasswordSHA2, info } from '../stores.js';
 	import {
 		fetchWithTimeout,
+		getAddressCache,
 		getAuthCache,
 		navigateToHomePage,
 		navigateToSettingsPage
@@ -45,6 +46,7 @@
 	}
 
 	onMount(() => {
+		getAddressCache();
 		getAuthCache();
 	});
 </script>

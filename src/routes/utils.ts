@@ -1,6 +1,6 @@
 import { onDestroy } from 'svelte';
 import { goto } from '$app/navigation';
-import { authPasswordSHA2 } from './stores.js';
+import { address, authPasswordSHA2 } from './stores.js';
 
 export function navigateToHomePage() {
 	goto('./');
@@ -58,6 +58,13 @@ export function onInterval(callback, milliseconds) {
 	onDestroy(() => {
 		clearInterval(interval);
 	});
+}
+
+export function getAddressCache() {
+	const addressCache = localStorage.getItem('cache:address');
+	if (addressCache) {
+		address.set(addressCache);
+	}
 }
 
 export function getAuthCache() {

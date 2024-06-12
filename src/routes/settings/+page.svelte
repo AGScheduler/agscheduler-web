@@ -9,7 +9,7 @@
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	import { address, info } from '../stores.js';
-	import { fetchWithTimeout, getAuthCache, navigateToHomePage } from '../utils.js';
+	import { fetchWithTimeout, getAddressCache, getAuthCache, navigateToHomePage } from '../utils.js';
 
 	let isLoading = false;
 
@@ -19,6 +19,7 @@
 		fetchWithTimeout($address + '/info')
 			.then((data) => {
 				$info = data.data;
+				localStorage.setItem('cache:address', $address);
 				navigateToHomePage();
 			})
 			.catch((error) => {
@@ -30,6 +31,7 @@
 	}
 
 	onMount(() => {
+		getAddressCache();
 		getAuthCache();
 	});
 </script>
