@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
 	import { Button } from '$lib/components/ui/button';
@@ -8,7 +9,13 @@
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	import { address, info } from '../stores.js';
-	import { fetchWithTimeout, navigateToHomePage } from '../utils.js';
+	import {
+		enterKeypress,
+		fetchWithTimeout,
+		getAddressCache,
+		getAuthCache,
+		navigateToHomePage
+	} from '../utils.js';
 
 	let isLoading = false;
 
@@ -18,6 +25,7 @@
 		fetchWithTimeout($address + '/info')
 			.then((data) => {
 				$info = data.data;
+				localStorage.setItem('cache:address', $address);
 				navigateToHomePage();
 			})
 			.catch((error) => {
@@ -27,6 +35,11 @@
 				isLoading = false;
 			});
 	}
+
+	onMount(() => {
+		getAddressCache();
+		getAuthCache();
+	});
 </script>
 
 <div class="flex h-screen items-center justify-center">
@@ -39,7 +52,13 @@
 			<form>
 				<div class="flex items-center space-x-4">
 					<Label for="address">Address</Label>
-					<Input id="address" bind:value={$address} placeholder="http://127.0.0.1:36370" />
+					<Input
+						id="address"
+						bind:value={$address}
+						placeholder="http://127.0.0.1:36370"
+						autofocus
+						on:keypress={(e) => enterKeypress(e, fetchInfo)}
+					/>
 					<Button on:click={fetchInfo} disabled={!$address || isLoading}>
 						{#if isLoading}
 							<LoaderCircle class="mr-2 h-4 w-4 animate-spin" />

@@ -1,6 +1,6 @@
 import { onDestroy } from 'svelte';
 import { goto } from '$app/navigation';
-import { authPasswordSHA2 } from './stores.js';
+import { address, authPasswordSHA2 } from './stores.js';
 
 export function navigateToHomePage() {
 	goto('./');
@@ -35,6 +35,7 @@ export async function fetchWithTimeout(url: string, options = {}) {
 			if (!resp.ok) {
 				if (resp.status == 401) {
 					navigateToAuthPage();
+					throw new Error('Unauthorized');
 				}
 				throw new Error(resp.statusText);
 			}
@@ -57,4 +58,24 @@ export function onInterval(callback, milliseconds) {
 	onDestroy(() => {
 		clearInterval(interval);
 	});
+}
+
+export function getAddressCache() {
+	const addressCache = localStorage.getItem('cache:address');
+	if (addressCache) {
+		address.set(addressCache);
+	}
+}
+
+export function getAuthCache() {
+	const authCache = localStorage.getItem('cache:auth');
+	if (authCache) {
+		authPasswordSHA2.set(authCache);
+	}
+}
+
+export function enterKeypress(e, func) {
+	if (e.keyCode === 13) {
+		func();
+	}
 }

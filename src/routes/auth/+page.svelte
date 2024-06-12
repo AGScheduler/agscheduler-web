@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
 	import sha256 from 'crypto-js/sha256';
@@ -9,7 +10,14 @@
 	import Settings from 'lucide-svelte/icons/settings';
 
 	import { address, authPasswordSHA2, info } from '../stores.js';
-	import { fetchWithTimeout, navigateToHomePage, navigateToSettingsPage } from '../utils.js';
+	import {
+		enterKeypress,
+		fetchWithTimeout,
+		getAddressCache,
+		getAuthCache,
+		navigateToHomePage,
+		navigateToSettingsPage
+	} from '../utils.js';
 
 	let isLoading = false;
 	let authPassword = '';
@@ -26,6 +34,7 @@
 		fetchWithTimeout($address + '/info')
 			.then((data) => {
 				$info = data.data;
+				localStorage.setItem('cache:auth', $authPasswordSHA2);
 				authPassword = '';
 				navigateToHomePage();
 			})
@@ -36,6 +45,11 @@
 				isLoading = false;
 			});
 	}
+
+	onMount(() => {
+		getAddressCache();
+		getAuthCache();
+	});
 </script>
 
 <div class="flex h-screen items-center justify-center">
@@ -67,6 +81,8 @@
 						bind:value={authPassword}
 						placeholder="Password"
 						type="password"
+						autofocus
+						on:keypress={(e) => enterKeypress(e, verifyAuth)}
 					/>
 					<Button on:click={verifyAuth} disabled={!authPassword || isLoading}>
 						{#if isLoading}

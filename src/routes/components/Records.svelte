@@ -188,8 +188,10 @@
 	</Table.Root>
 
 	{#if count}
-		<div class="flex items-center space-x-2">
-			<Pagination bind:count bind:page bind:perPage />
+		<div class="flex flex-wrap items-center justify-center space-x-2">
+			<div>
+				<Pagination bind:count bind:page bind:perPage />
+			</div>
 			<div class="mt-1.5">
 				<Select.Root bind:selected={selectedPerPage}>
 					<Select.Trigger class="w-[80px]">
