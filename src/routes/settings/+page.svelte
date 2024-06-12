@@ -21,11 +21,11 @@
 
 	function fetchInfo() {
 		isLoading = true;
+		localStorage.setItem('cache:address', $address);
 
 		fetchWithTimeout($address + '/info')
 			.then((data) => {
 				$info = data.data;
-				localStorage.setItem('cache:address', $address);
 				navigateToHomePage();
 			})
 			.catch((error) => {
