@@ -11,6 +11,7 @@
 
 	import { address, authPasswordSHA2, info } from '../stores.js';
 	import {
+		enterKeypress,
 		fetchWithTimeout,
 		getAddressCache,
 		getAuthCache,
@@ -81,6 +82,7 @@
 						placeholder="Password"
 						type="password"
 						autofocus
+						on:keypress={(e) => enterKeypress(e, verifyAuth)}
 					/>
 					<Button on:click={verifyAuth} disabled={!authPassword || isLoading}>
 						{#if isLoading}

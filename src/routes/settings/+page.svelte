@@ -9,7 +9,13 @@
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	import { address, info } from '../stores.js';
-	import { fetchWithTimeout, getAddressCache, getAuthCache, navigateToHomePage } from '../utils.js';
+	import {
+		enterKeypress,
+		fetchWithTimeout,
+		getAddressCache,
+		getAuthCache,
+		navigateToHomePage
+	} from '../utils.js';
 
 	let isLoading = false;
 
@@ -51,6 +57,7 @@
 						bind:value={$address}
 						placeholder="http://127.0.0.1:36370"
 						autofocus
+						on:keypress={(e) => enterKeypress(e, fetchInfo)}
 					/>
 					<Button on:click={fetchInfo} disabled={!$address || isLoading}>
 						{#if isLoading}

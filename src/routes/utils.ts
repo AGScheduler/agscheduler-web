@@ -73,3 +73,9 @@ export function getAuthCache() {
 		authPasswordSHA2.set(authCache);
 	}
 }
+
+export function enterKeypress(e, func) {
+	if (e.keyCode === 13) {
+		func();
+	}
+}
