@@ -52,22 +52,22 @@
 		<Tabs.Root>
 			<Tabs.List>
 				<Tabs.Trigger value="jobs" on:click={jobs.fetchJobs}>Jobs</Tabs.Trigger>
-				{#if $info.has_recorder}
+				{#if $info.recorder.has_recorder}
 					<Tabs.Trigger value="records" on:click={records.fetchRecords}>Records</Tabs.Trigger>
 				{/if}
-				{#if $info.is_cluster_mode}
+				{#if $info.cluster.is_cluster_mode}
 					<Tabs.Trigger value="cluster" on:click={cluster.fetchNodes}>Cluster</Tabs.Trigger>
 				{/if}
 			</Tabs.List>
 			<Tabs.Content value="jobs">
 				<Jobs bind:this={jobs} />
 			</Tabs.Content>
-			{#if $info.has_recorder}
+			{#if $info.recorder.has_recorder}
 				<Tabs.Content value="records">
 					<Records bind:this={records} />
 				</Tabs.Content>
 			{/if}
-			{#if $info.is_cluster_mode}
+			{#if $info.cluster.is_cluster_mode}
 				<Tabs.Content value="cluster">
 					<Cluster bind:this={cluster} />
 				</Tabs.Content>

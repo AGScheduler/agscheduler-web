@@ -24,7 +24,7 @@
 
 	function startOrStopScheduler() {
 		let path = '/scheduler';
-		if (!$info.is_running) {
+		if (!$info.scheduler.is_running) {
 			path = path + '/start';
 		} else {
 			path = path + '/stop';
@@ -104,7 +104,11 @@
 				<LockKeyhole class="h-4 w-4" />
 			</Button>
 		{/if}
-		<Switch id="is-running" bind:checked={$info.is_running} on:click={startOrStopScheduler} />
-		<Label for="is-running">{$info.is_running ? 'Start' : 'Stop'}</Label>
+		<Switch
+			id="is-running"
+			bind:checked={$info.scheduler.is_running}
+			on:click={startOrStopScheduler}
+		/>
+		<Label for="is-running">{$info.scheduler.is_running ? 'Start' : 'Stop'}</Label>
 	</div>
 </div>
