@@ -93,7 +93,14 @@
 {:else if showTable}
 	<ClusterTable bind:nodes bind:page {perPage} />
 	{#if nodes.length}
-		<Pagination bind:count={nodes.length} bind:page />
+		<div class="flex flex-wrap items-center justify-center space-x-2">
+			<div>
+				<Pagination bind:count={nodes.length} bind:page />
+			</div>
+			<div class="mt-2 min-w-20">
+				Total: {nodes.length}
+			</div>
+		</div>
 	{/if}
 {:else}
 	<div class="flex items-center justify-center">

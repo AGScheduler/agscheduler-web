@@ -106,6 +106,13 @@
 	</Table.Root>
 
 	{#if queues.length}
-		<Pagination bind:count={queues.length} bind:page />
+		<div class="flex flex-wrap items-center justify-center space-x-2">
+			<div>
+				<Pagination bind:count={queues.length} bind:page />
+			</div>
+			<div class="mt-2 min-w-20">
+				Total: {queues.length}
+			</div>
+		</div>
 	{/if}
 {/if}
