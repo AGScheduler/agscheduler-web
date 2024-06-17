@@ -17,60 +17,50 @@
 			<Text class="h-4 w-4" />
 		</Button>
 	</Popover.Trigger>
-	<Popover.Content class="w-120">
+	<Popover.Content class="w-90">
 		<div class="grid gap-4">
 			<div class="space-y-2">
 				<h4 class="font-medium leading-none">Details</h4>
 				<p class="text-muted-foreground text-sm">Information about this job.</p>
 			</div>
 			<Separator />
-			<div class="grid gap-2">
-				<div class="grid grid-cols-2 items-center gap-4">
-					{#if job.type === 'datetime'}
-						<Label for="start_at">StartAt:</Label>
-						<Label for="start_at">{job.start_at}</Label>
-					{:else if job.type === 'interval'}
-						<Label for="interval">Interval:</Label>
-						<Label for="interval">{job.interval}</Label>
-					{:else if job.type === 'cron'}
-						<Label for="cron_expr">CronExpr:</Label>
-						<Label for="cron_expr">{job.cron_expr}</Label>
-					{/if}
-				</div>
+			<div class="grid grid-cols-2 gap-2">
+				{#if job.type === 'datetime'}
+					<Label for="start_at">StartAt:</Label>
+					<Label for="start_at">{job.start_at}</Label>
+				{:else if job.type === 'interval'}
+					<Label for="interval">Interval:</Label>
+					<Label for="interval">{job.interval}</Label>
+				{:else if job.type === 'cron'}
+					<Label for="cron_expr">CronExpr:</Label>
+					<Label for="cron_expr">{job.cron_expr}</Label>
+				{/if}
 			</div>
-			<div class="grid gap-2">
-				<div class="grid grid-cols-2 items-center gap-4">
-					<Label for="timezone">Timezone:</Label>
-					<Label for="timezone">{job.timezone}</Label>
-				</div>
+			<div class="grid grid-cols-2 gap-2">
+				<Label for="timezone">Timezone:</Label>
+				<Label for="timezone">{job.timezone}</Label>
 			</div>
-			<div class="grid gap-2">
-				<div class="grid grid-cols-2 items-center gap-4">
-					<Label for="func_name">FuncName:</Label>
-					<Label for="func_name">{job.func_name}</Label>
-				</div>
+			<div class="grid grid-cols-2 gap-2">
+				<Label for="func_name">FuncName:</Label>
+				<Label for="func_name">{job.func_name}</Label>
 			</div>
-			<div class="grid gap-2">
-				<div class="grid grid-cols-2 items-center gap-4">
-					<Label for="args">Args:</Label>
-					<Label for="args">
-						<div class="whitespace-pre-wrap">
-							{job.args !== null ? JSON.stringify(job.args, null, 4) : '{}'}
-						</div>
-					</Label>
-				</div>
+			<div class="grid grid-cols-2 gap-2">
+				<Label for="args">Args:</Label>
+				<Label for="args">
+					<div class="whitespace-pre-wrap">
+						{job.args !== null ? JSON.stringify(job.args, null, 4) : '{}'}
+					</div>
+				</Label>
 			</div>
-			<div class="grid gap-2">
-				<div class="grid grid-cols-2 items-center gap-4">
-					<Label for="timeout">Timeout:</Label>
-					<Label for="timeout">{job.timeout}</Label>
-				</div>
+			<div class="grid grid-cols-2 gap-2">
+				<Label for="timeout">Timeout:</Label>
+				<Label for="timeout">{job.timeout}</Label>
 			</div>
-			<div class="grid gap-2">
-				<div class="grid grid-cols-2 items-center gap-4">
-					<Label for="queues">Queues:</Label>
-					<Label for="queues">{job.queues !== null ? JSON.stringify(job.queues) : '[]'}</Label>
-				</div>
+			<div class="grid grid-cols-2 gap-2">
+				<Label for="queues">Queues:</Label>
+				<Label for="queues"
+					>{job.queues !== null ? JSON.stringify(job.queues, null, 4) : '[]'}</Label
+				>
 			</div>
 		</div>
 	</Popover.Content>

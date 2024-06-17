@@ -11,11 +11,13 @@
 	import Cluster from './components/Cluster.svelte';
 	import Info from './components/Info.svelte';
 	import Jobs from './components/Jobs.svelte';
+	import Queues from './components/Queues.svelte';
 	import Records from './components/Records.svelte';
 	import { info } from './stores.js';
 	import { getAddressCache, getAuthCache, navigateToSettingsPage } from './utils.js';
 
 	let jobs: any;
+	let queues: any;
 	let records: any;
 	let cluster: any;
 
@@ -52,22 +54,30 @@
 		<Tabs.Root>
 			<Tabs.List>
 				<Tabs.Trigger value="jobs" on:click={jobs.fetchJobs}>Jobs</Tabs.Trigger>
-				{#if $info.has_recorder}
+				{#if $info.broker.has_broker}
+					<Tabs.Trigger value="queues" on:click={queues.fetchQueues}>Queues</Tabs.Trigger>
+				{/if}
+				{#if $info.recorder.has_recorder}
 					<Tabs.Trigger value="records" on:click={records.fetchRecords}>Records</Tabs.Trigger>
 				{/if}
-				{#if $info.is_cluster_mode}
+				{#if $info.cluster.is_cluster_mode}
 					<Tabs.Trigger value="cluster" on:click={cluster.fetchNodes}>Cluster</Tabs.Trigger>
 				{/if}
 			</Tabs.List>
 			<Tabs.Content value="jobs">
 				<Jobs bind:this={jobs} />
 			</Tabs.Content>
-			{#if $info.has_recorder}
+			{#if $info.broker.has_broker}
+				<Tabs.Content value="queues">
+					<Queues bind:this={queues} />
+				</Tabs.Content>
+			{/if}
+			{#if $info.recorder.has_recorder}
 				<Tabs.Content value="records">
 					<Records bind:this={records} />
 				</Tabs.Content>
 			{/if}
-			{#if $info.is_cluster_mode}
+			{#if $info.cluster.is_cluster_mode}
 				<Tabs.Content value="cluster">
 					<Cluster bind:this={cluster} />
 				</Tabs.Content>

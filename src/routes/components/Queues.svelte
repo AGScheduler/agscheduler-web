@@ -2,50 +2,40 @@
 	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
 
+	import { Badge } from '$lib/components/ui/badge';
 	import { Button } from '$lib/components/ui/button';
-	import { Label } from '$lib/components/ui/label';
-	import { Switch } from '$lib/components/ui/switch';
+	import * as Table from '$lib/components/ui/table';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 	import RotateCw from 'lucide-svelte/icons/rotate-cw';
 
-	import ClusterTable from './ClusterTable.svelte';
-	import ClusterGraph from './ClusterGraph.svelte';
 	import Pagination from './Pagination.svelte';
 	import { address, info } from '../stores.js';
 	import { fetchWithTimeout } from '../utils.js';
 
 	let isLoading = false;
-	let showTable = true;
 
 	let perPage = 10;
 	let page = 1;
 
-	type Node = {
-		endpoint: string;
-		endpoint_grpc: string;
-		endpoint_http: string;
-		endpoint_main: string;
-		queue: string;
-		mode: string;
-		version: string;
-		health: boolean;
-		register_time: string;
-		last_heartbeat_time: string;
+	type Queue = {
+		name: string;
+		type: string;
+		count: number;
+		workers: number;
 	};
 
-	let nodeObj = {};
-	let nodes: Node[] = [];
+	let queues: Queue[] = [];
 
-	export function fetchNodes() {
+	export function fetchQueues() {
 		if ($info.version === '') {
 			return;
 		}
 
 		isLoading = true;
 
-		fetchWithTimeout($address + '/cluster/nodes')
+		fetchWithTimeout($address + '/broker/queues')
 			.then((data) => {
-				nodeObj = data.data !== null ? data.data : {};
+				queues = data.data !== null ? data.data : [];
 				page = 1;
 			})
 			.catch((error) => {
@@ -56,26 +46,17 @@
 			});
 	}
 
-	$: {
-		nodes = [];
-		for (let k in nodeObj) {
-			nodes.push(nodeObj[k]);
-		}
-	}
-
 	onMount(() => {
-		fetchNodes();
+		fetchQueues();
 	});
 </script>
 
 <div class="flex items-center justify-end space-x-2">
-	<Switch id="showTable" bind:checked={showTable} on:click={fetchNodes} />
-	<Label for="showTable">{showTable ? 'Table' : 'Graph'}</Label>
 	<Button
 		variant="ghost"
 		size="icon"
 		class="h-6 w-6 p-0"
-		on:click={fetchNodes}
+		on:click={fetchQueues}
 		disabled={isLoading}
 	>
 		{#if isLoading}
@@ -90,20 +71,48 @@
 	<div class="flex justify-center">
 		<LoaderCircle class="h-8 w-8 animate-spin" />
 	</div>
-{:else if showTable}
-	<ClusterTable bind:nodes bind:page {perPage} />
-	{#if nodes.length}
+{:else}
+	<Table.Root>
+		<Table.Header>
+			<Table.Row>
+				<Table.Head>Name</Table.Head>
+				<Table.Head>Type</Table.Head>
+				<Table.Head>Count</Table.Head>
+				<Table.Head>Workers</Table.Head>
+			</Table.Row>
+		</Table.Header>
+		<Table.Body>
+			{#each queues.slice((page - 1) * perPage, page * perPage) as queue, i (i)}
+				<Table.Row>
+					<Table.Cell>{queue.name}</Table.Cell>
+					<Table.Cell>
+						<Badge variant="default">
+							{queue.type}
+						</Badge>
+					</Table.Cell>
+					<Table.Cell>
+						<Badge variant="secondary">
+							{queue.count}
+						</Badge>
+					</Table.Cell>
+					<Table.Cell>
+						<Badge variant="secondary">
+							{queue.workers}
+						</Badge>
+					</Table.Cell>
+				</Table.Row>
+			{/each}
+		</Table.Body>
+	</Table.Root>
+
+	{#if queues.length}
 		<div class="flex flex-wrap items-center justify-center space-x-2">
 			<div>
-				<Pagination bind:count={nodes.length} bind:page />
+				<Pagination bind:count={queues.length} bind:page />
 			</div>
 			<div class="mt-2 min-w-20">
-				Total: {nodes.length}
+				Total: {queues.length}
 			</div>
 		</div>
 	{/if}
-{:else}
-	<div class="flex items-center justify-center">
-		<ClusterGraph bind:nodes />
-	</div>
 {/if}

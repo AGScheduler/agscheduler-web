@@ -174,7 +174,14 @@
 	</Table.Root>
 
 	{#if jobs.length}
-		<Pagination bind:count={jobs.length} bind:page />
+		<div class="flex flex-wrap items-center justify-center space-x-2">
+			<div>
+				<Pagination bind:count={jobs.length} bind:page />
+			</div>
+			<div class="mt-2 min-w-20">
+				Total: {jobs.length}
+			</div>
+		</div>
 	{/if}
 {/if}
 
